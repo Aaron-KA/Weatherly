@@ -80,7 +80,7 @@ function displayResult(lati, long) {
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     $.ajax({
         type: 'GET',
-        url: 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lati + '&lon=' + long + '&appid=3123784587e87adbde85cc9d67d3fb5f&units=metric',
+        url: 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lati + '&lon=' + long + '&appid=3123784587e87adbde85cc9d67d3fb5f&units=metric',
         data: {
             get_param: 'value'
         },
