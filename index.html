@@ -80,7 +80,7 @@
 
         <!-- Settings Gear -->
         <div hidden class="setting_gear animated">
-            <div class="gear_inner" data-toggle="modal" data-target="#openModal">
+            <div class="gear_inner" data-toggle="modal" data-target="#settingModal">
                 <span class="setting"><i class="fa fa-cog" aria-hidden="true"></i></span>
             </div>
         </div>
@@ -89,8 +89,8 @@
     </div>
     <!-- /Container -->
 
-    <!-- Modal -->
-    <div class="modal fade animated slideInUp noselect" id="openModal" data-backdrop="static" data-keyboard="false">
+    <!-- Setting Modal -->
+    <div class="modal fade animated slideInUp noselect" id="settingModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header text-right">
@@ -100,17 +100,34 @@
                 <div class="modal-body text-center">
                     <h3>Where Are You?</h3>
                     <br>
-                    <input type="text" autofocus placeholder="Enter a location" class="animated" id="mapSearch">
+                    <input type="text" autofocus placeholder="Enter a location" class="animated" id="settingSearch">
                 </div>
             </div>
         </div>
     </div>
-    <!-- /Modal -->
+    <!-- /Setting Modal -->
+
+    <!-- Set Location Modal -->
+    <div class="modal fade animated slideInUp noselect" id="locationModal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-right">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="close_modal_location"><i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <h3>Where Are You?</h3>
+                    <br>
+                    <input type="text" autofocus placeholder="Enter a location" class="animated" id="locationSearch">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Set Location Modal -->
 
     <!-- Core JS -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7QJSRyG0Ns6MQNmc5pX2JPsX6VGooNPY&libraries=places"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <!--     <script type="text/javascript" src="js/typed.js"></script> -->
     <script type="text/javascript" src="js/moment.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>

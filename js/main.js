@@ -7,7 +7,7 @@ var anim = 0;
 
 function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showModal); 
+        navigator.geolocation.getCurrentPosition(showPosition, showModal);
     } else {
         alert("Geolocation is not supported by this browser.");
     }
@@ -15,15 +15,15 @@ function getLocation() {
 
 //Function to show modal if geolocation is not supported.
 function showModal() {
-    $('#openModal').modal('show');
-    $('#close_modal').hide();
+    $('#locationModal').modal('show');
+    $('#close_modal_location').hide();
 }
 
 //Funtion to show controls after modal dissappears
 function show_controls() {
     $(".setting_gear").show();
     $('#close_modal').show();
-    var check = document.getElementById('openModal');
+    var check = document.getElementById('settingModal');
     check.removeAttribute('data-keyboard');
     check.removeAttribute('data-backdrop');
 }
@@ -50,7 +50,7 @@ function showPosition(position) {
     displayResult(lati, long);
 }
 
-function get_weather_icon(main_weather, pod) {
+function getWeatherIcon(main_weather, pod) {
     switch (main_weather) {
         case 'Clear':
             if (pod === 'd') {
@@ -68,7 +68,7 @@ function get_weather_icon(main_weather, pod) {
     }
 }
 
-function get_pod(pod) {
+function getPOD(pod) {
     if (pod === 'n')
         return "night";
     else
@@ -114,48 +114,48 @@ function displayResult(lati, long) {
             city = toTitleCase(city);
             country = country.toUpperCase();
 
-            var weather_icon = data.list[0].weather[0].main;
+            var weatherIcon = data.list[0].weather[0].main;
             var pod = data.list[0].sys.pod;
-            var weather_icon = get_weather_icon(weather_icon, pod);
-            randombackground(weather_icon);
-            var pod = get_pod(pod);
+            var weatherIcon = getWeatherIcon(weatherIcon, pod);
+            randombackground(weatherIcon);
+            var pod = getPOD(pod);
             if (city == "Kanija Bhavan") {
                 city = "Bangalore";
             }
             document.getElementById('info-bar').innerHTML = '<p><i class="fa fa-map-marker"></i> ' + city + ', ' + country + '<span id="temp-right"><i class="fa fa-thermometer-full" aria-hidden="true"></i> ' + temp + '<span id="small-font">&#8451;</span></span></p><br>';
-            document.getElementById('weather-description').innerHTML = '<i class="wi wi-' + pod + '-' + weather_icon + ' center-icon"></i>';
+            document.getElementById('weather-description').innerHTML = '<i class="wi wi-' + pod + '-' + weatherIcon + ' center-icon"></i>';
             document.getElementById('weather-description').innerHTML += '<p>' + weather + '</p>';
             var temp = data.list[8].main.temp;
-            var weather_icon = data.list[8].weather[0].main;
+            var weatherIcon = data.list[8].weather[0].main;
             var pod = data.list[8].sys.pod;
-            var weather_icon = get_weather_icon(weather_icon, pod);
-            var pod = get_pod(pod);
+            var weatherIcon = getWeatherIcon(weatherIcon, pod);
+            var pod = getPOD(pod);
             document.getElementById('timeline-1').innerHTML = '<p>' + temp + '<span id="small-font">&#8451;</span></p>';
-            document.getElementById('timeline-1').innerHTML += '<i class="wi wi-' + pod + '-' + weather_icon + ' timeline-icon"></i>';
+            document.getElementById('timeline-1').innerHTML += '<i class="wi wi-' + pod + '-' + weatherIcon + ' timeline-icon"></i>';
             document.getElementById('timeline-1').innerHTML += '<p>' + day2 + '</p>';
             var temp = data.list[16].main.temp;
-            var weather_icon = data.list[16].weather[0].main;
+            var weatherIcon = data.list[16].weather[0].main;
             var pod = data.list[16].sys.pod;
-            var weather_icon = get_weather_icon(weather_icon, pod);
-            var pod = get_pod(pod);
+            var weatherIcon = getWeatherIcon(weatherIcon, pod);
+            var pod = getPOD(pod);
             document.getElementById('timeline-2').innerHTML = '<p>' + temp + '<span id="small-font">&#8451;</span></p>';
-            document.getElementById('timeline-2').innerHTML += '<i class="wi wi-' + pod + '-' + weather_icon + ' timeline-icon"></i>';
+            document.getElementById('timeline-2').innerHTML += '<i class="wi wi-' + pod + '-' + weatherIcon + ' timeline-icon"></i>';
             document.getElementById('timeline-2').innerHTML += '<p>' + day3 + '</p>';
             var temp = data.list[24].main.temp;
-            var weather_icon = data.list[24].weather[0].main;
+            var weatherIcon = data.list[24].weather[0].main;
             var pod = data.list[24].sys.pod;
-            var weather_icon = get_weather_icon(weather_icon, pod);
-            var pod = get_pod(pod);
+            var weatherIcon = getWeatherIcon(weatherIcon, pod);
+            var pod = getPOD(pod);
             document.getElementById('timeline-3').innerHTML = '<p>' + temp + '<span id="small-font">&#8451;</span></p>';
-            document.getElementById('timeline-3').innerHTML += '<i class="wi wi-' + pod + '-' + weather_icon + ' timeline-icon"></i>';
+            document.getElementById('timeline-3').innerHTML += '<i class="wi wi-' + pod + '-' + weatherIcon + ' timeline-icon"></i>';
             document.getElementById('timeline-3').innerHTML += '<p>' + day4 + '</p>';
             var temp = data.list[32].main.temp;
-            var weather_icon = data.list[32].weather[0].main;
+            var weatherIcon = data.list[32].weather[0].main;
             var pod = data.list[32].sys.pod;
-            var weather_icon = get_weather_icon(weather_icon, pod);
-            var pod = get_pod(pod);
+            var weatherIcon = getWeatherIcon(weatherIcon, pod);
+            var pod = getPOD(pod);
             document.getElementById('timeline-4').innerHTML = '<p>' + temp + '<span id="small-font">&#8451;</span></p>';
-            document.getElementById('timeline-4').innerHTML += '<i class="wi wi-' + pod + '-' + weather_icon + ' timeline-icon"></i>';
+            document.getElementById('timeline-4').innerHTML += '<i class="wi wi-' + pod + '-' + weatherIcon + ' timeline-icon"></i>';
             document.getElementById('timeline-4').innerHTML += '<p>' + day5 + '</p>';
             //custom Location
             if (anim == 1) {
@@ -185,66 +185,79 @@ function displayResult(lati, long) {
 
 }
 
-//Function to get coordinates from google based on custom search.
-var pac_input = document.getElementById('mapSearch');
-(function pacSelectFirst(input) {
-    var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
 
-    //Event Listener for enter button to sleect the first result be default.
-    function addEventListenerWrapper(type, listener) {
-        if (type == 'keydown') {
-            var orig_listener = listener;
-            listener = function(event) {
-                var suggestion_selected = $('.pac-item-selected').length > 0;
-                if (event.which == 13 && !suggestion_selected) {
-                    var simulated_downarrow = $.Event('keydown', {
-                        keyCode: 40,
-                        which: 40
+function googleFetch(location) {
+    //Function to get coordinates from google based on custom search.
+    var pac_input = document.getElementById(location);
+    (function pacSelectFirst(input) {
+        var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+
+        //Event Listener for enter button to sleect the first result be default.
+        function addEventListenerWrapper(type, listener) {
+            if (type == 'keydown') {
+                var orig_listener = listener;
+                listener = function(event) {
+                    var suggestion_selected = $('.pac-item-selected').length > 0;
+                    if (event.which == 13 && !suggestion_selected) {
+                        var simulated_downarrow = $.Event('keydown', {
+                            keyCode: 40,
+                            which: 40
+                        });
+                        orig_listener.apply(input, [simulated_downarrow]);
+                    }
+
+                    orig_listener.apply(input, [event]);
+                };
+            }
+
+            _addEventListener.apply(input, [type, listener]);
+        }
+
+        input.addEventListener = addEventListenerWrapper;
+        input.attachEvent = addEventListenerWrapper;
+
+
+        //Get coordinates from Google API based on search and display results.
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            var place = autocomplete.getPlace();
+            try {
+                var lat = place.geometry.location.lat();
+                var lng = place.geometry.location.lng();
+                //if anim = 1 custom location selected
+                anim = 1;
+                displayResult(lat, lng);
+                document.getElementById('close_modal_location').click();
+                document.getElementById('close_modal').click();
+                document.getElementById(location).value = "";
+                document.getElementById(location).placeholder = "Enter a location";
+
+            } catch (err) {
+                var selector = $('#' + location);
+                selector.addClass('shake');
+                selector.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
+                    function(e) {
+                        selector.removeClass('shake');
                     });
-                    orig_listener.apply(input, [simulated_downarrow]);
-                }
+                document.getElementById(location).value = "";
+                document.getElementById(location).placeholder = "Enter a location";
+            }
+            show_controls();
+        });
 
-                orig_listener.apply(input, [event]);
-            };
-        }
+    })(pac_input);
 
-        _addEventListener.apply(input, [type, listener]);
-    }
+}
 
-    input.addEventListener = addEventListenerWrapper;
-    input.attachEvent = addEventListenerWrapper;
+googleFetch('locationSearch');
+googleFetch('settingSearch');
 
 
-    //Get coordinates from Google API based on search and display results.
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    google.maps.event.addListener(autocomplete, 'place_changed', function() {
-        var place = autocomplete.getPlace();
-        try {
-            var lat = place.geometry.location.lat();
-            var lng = place.geometry.location.lng();
-            //if anim = 1 custom location selected
-            anim = 1;
-            displayResult(lat, lng);
-            document.getElementById('close_modal').click();
-            document.getElementById('mapSearch').value = "";
-            document.getElementById('mapSearch').placeholder = "Enter a location";
-
-        } catch (err) {
-            var selector = $('#mapSearch');
-            selector.addClass('shake');
-            selector.one('webkitAnimationEnd oanimationend msAnimationEnd animationend',
-                function(e) {
-                    selector.removeClass('shake');
-                });
-            document.getElementById('mapSearch').value = "";
-            document.getElementById('mapSearch').placeholder = "Enter a location";
-        }
-        show_controls();
-    });
-
-})(pac_input);
 
 //Focuses on the input box in the modal
-$('#openModal').on('shown.bs.modal', function() {
-    $('#mapSearch').focus();
+$('#settingModal').on('shown.bs.modal', function() {
+    $('#settingSearch').focus();
+})
+$('#locationModal').on('shown.bs.modal', function() {
+    $('#locationSearch').focus();
 })
